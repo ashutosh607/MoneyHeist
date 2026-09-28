@@ -1,0 +1,1133 @@
+/* =====================================================================
+   THE PROFESSOR'S RULES - 3D OPERATION MANUAL COMPONENT STYLES
+   ===================================================================== */
+
+:root {
+  --rules-bg: #080808;
+  --rules-black: #000000;
+  --rules-panel: #171717;
+  --rules-panel2: #111111;
+  --rules-red: #E50914;
+  --rules-red2: #FF1A1A;
+  --rules-white: #F5F2ED;
+  --rules-grey: #A3A3A3;
+  --rules-muted: #666666;
+  --rules-border: #292929;
+  --rules-brass: #C9A227;
+}
+
+/* Base Section */
+.rules {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--rules-bg);
+  color: var(--rules-white);
+  padding: 6rem 1.5rem 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.rules__inner {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rules__top-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================================================================
+   INTRO SECTION (Left side on Desktop, Top on Tablet/Mobile)
+   ===================================================================== */
+.rules__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+  max-width: 400px;
+  width: 100%;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="closed"] .rules__intro {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-24px);
+}
+
+[data-state="open"] .rules__intro {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.rules__kicker-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.rules__kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--rules-red);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+}
+
+.rules__kicker-line {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--rules-red);
+}
+
+.rules__heading {
+  font-family: 'Black Ops One', 'Cinzel', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--rules-white);
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.rules__divider {
+  width: 48px;
+  height: 2px;
+  background-color: var(--rules-red);
+  margin-bottom: 1.25rem;
+}
+
+.rules__subtext {
+  font-family: 'Geist Variable', -apple-system, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--rules-grey);
+  margin: 0 0 1.5rem;
+  max-width: 320px;
+}
+
+.rules__protocol-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  background: rgba(229, 9, 20, 0.04);
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.rules__protocol-badge-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--rules-red);
+  text-transform: uppercase;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.rules__small-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: var(--rules-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* =====================================================================
+   BOOK STAGE & 3D ENVIRONMENT
+   ===================================================================== */
+.book-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 920px;
+  padding: 2rem 0;
+}
+
+/* Floor Shadow & Ambient Light - Non interactive */
+.book-floor {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 115%;
+  height: 100px;
+  background: radial-gradient(ellipse at 50% 60%, rgba(229, 9, 20, 0.16) 0%, rgba(0, 0, 0, 0.85) 50%, transparent 75%);
+  filter: blur(14px);
+  pointer-events: none;
+  z-index: 1;
+  transition: width 1.5s cubic-bezier(0.65, 0.02, 0.2, 1), opacity 1.5s cubic-bezier(0.65, 0.02, 0.2, 1);
+}
+
+[data-state="closed"] .book-floor {
+  width: 60%;
+  transform: translateX(-20%);
+  opacity: 0.6;
+}
+
+[data-state="open"] .book-floor {
+  width: 115%;
+  transform: translateX(-50%);
+  opacity: 1;
+}
+
+/* Perspective Container */
+.book-scene {
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Tilt & Parallax Carrier */
+.book-tilt {
+  transform-style: preserve-3d;
+  --rx: 8deg;
+  --ry: -14deg;
+  --rz: -3deg;
+  --prx: 0deg;
+  --pry: 0deg;
+  transform: rotateX(calc(var(--rx) + var(--prx))) rotateY(calc(var(--ry) + var(--pry))) rotateZ(var(--rz));
+  transition: transform 1.5s cubic-bezier(0.65, 0.02, 0.2, 1);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[data-state="open"] .book-tilt {
+  --rx: 4deg;
+  --ry: -8deg;
+  --rz: -2deg;
+}
+
+/* The Book Spread */
+.book {
+  position: relative;
+  width: min(100%, 880px);
+  aspect-ratio: 1.44 / 1;
+  transform-style: preserve-3d;
+  transform: translateX(-25%);
+  transition: transform 1.5s cubic-bezier(0.65, 0.02, 0.2, 1);
+}
+
+[data-state="open"] .book {
+  transform: translateX(0);
+}
+
+/* Common Layers */
+.page-under,
+.page,
+.cover {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+}
+
+.page-under--left,
+.page--rules {
+  left: 0;
+}
+
+.page-under--right,
+.page--right,
+.cover {
+  left: 50%;
+}
+
+/* Paper Thickness Simulator */
+.page-under {
+  background: var(--rules-panel2);
+  transform: translateZ(0);
+  box-shadow: 1px 1px 0 #1c1c1c, 2px 2px 0 #0b0b0b, 3px 3px 0 #1c1c1c, 4px 4px 0 #0b0b0b;
+}
+
+.page-under--left {
+  border-radius: 4px 0 0 4px;
+}
+
+.page-under--right {
+  border-radius: 0 4px 4px 0;
+}
+
+/* Pages Styling */
+.page {
+  background: linear-gradient(135deg, var(--rules-panel) 0%, var(--rules-panel2) 100%);
+  padding: 6.5% 7.5%;
+  border: 1px solid var(--rules-border);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  user-select: text;
+}
+
+/* Spine Gutter Shadows */
+.page--rules {
+  transform: translateZ(5px);
+  border-radius: 4px 0 0 4px;
+  box-shadow: inset -22px 0 30px -8px rgba(0, 0, 0, 0.92), inset 0 0 50px rgba(0, 0, 0, 0.7);
+}
+
+.page--right {
+  transform: translateZ(1px);
+  border-radius: 0 4px 4px 0;
+  box-shadow: inset 22px 0 30px -8px rgba(0, 0, 0, 0.92), inset 0 0 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Page Noise Layer */
+.page__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-size: 4px 4px;
+  mix-blend-mode: overlay;
+}
+
+/* Page Header */
+.page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.page__header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page__header-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--rules-red);
+  text-transform: uppercase;
+}
+
+.page__header-icon {
+  width: 13px;
+  height: 13px;
+  color: var(--rules-red);
+}
+
+.page__header-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--rules-muted);
+  text-transform: uppercase;
+}
+
+.page__header-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rules-red) 0%, rgba(229, 9, 20, 0.3) 70%, transparent 100%);
+}
+
+/* Page Footer */
+.page__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--rules-muted);
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(41, 41, 41, 0.4);
+}
+
+/* =====================================================================
+   RULES LIST (Left Page Content: 01 to 05)
+   ==================================================================== */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  padding: 0.2rem 0;
+}
+
+.rule-row {
+  position: relative;
+  padding: 0.45rem 0 0.55rem;
+}
+
+.rule-row__content {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.rule-row__num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--rules-red);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+.rule-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rule-row__title {
+  font-family: 'Geist Variable', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--rules-white);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.rule-row__desc {
+  font-family: 'Geist Variable', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: var(--rules-grey);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.rule-row__divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--rules-border);
+}
+
+/* =====================================================================
+   RIGHT PAGE CONTENT: LORE / RULES 06-07 & TODAY YOU GO IN (Image 2)
+   ===================================================================== */
+.page-right__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.lore-rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.narrative-callout {
+  margin: 1rem 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rules-border);
+}
+
+.narrative-callout__text {
+  font-family: 'Geist Variable', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--rules-white);
+  margin: 0;
+}
+
+.narrative-callout__highlight {
+  color: var(--rules-red);
+  font-weight: 700;
+}
+
+/* Classified Stamp on Right Page */
+.page__stamp-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.8rem;
+}
+
+.classified-stamp {
+  display: inline-block;
+  border: 1.5px solid var(--rules-red);
+  background: rgba(229, 9, 20, 0.06);
+  padding: 0.35rem 1rem;
+  font-family: 'Black Ops One', 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  color: var(--rules-red);
+  text-transform: uppercase;
+  position: relative;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.15);
+}
+
+.classified-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 0.5px dashed rgba(229, 9, 20, 0.45);
+  pointer-events: none;
+}
+
+/* =====================================================================
+   COVER (3D HINGED ON LEFT EDGE)
+   ===================================================================== */
+.cover {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: translateZ(4px) rotateY(0deg);
+  transition: transform 1.3s cubic-bezier(0.65, 0.02, 0.2, 1) 0.3s;
+  border-radius: 0 4px 4px 0;
+}
+
+[data-state="open"] .cover {
+  transform: translateZ(4px) rotateY(-180deg);
+}
+
+.cover__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Inner Back Face */
+.cover__back {
+  transform: rotateY(180deg);
+  background: linear-gradient(to right, #0e0e0e 0%, #151515 100%);
+  border: 1px solid var(--rules-border);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+  border-radius: 4px 0 0 4px;
+}
+
+/* Front Cover Face Art */
+.cover__front {
+  background: radial-gradient(circle at 55% 45%, #1c1c1c 0%, #111111 60%, #080808 100%);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.95), inset 0 0 10px rgba(229, 9, 20, 0.15), 0 0 25px rgba(0, 0, 0, 0.9);
+  border: 1px solid #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8% 8% 8% 18%; /* extra padding on left for spine */
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Distressed Leather Grain Layer */
+.cover__leather-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(ellipse at 40% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+  opacity: 0.85;
+}
+
+/* Noise overlay via SVG filter inside DOM */
+.cover__noise-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+}
+
+/* Spine Strip along left edge */
+.cover__spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 38px;
+  background: linear-gradient(to right, #090909 0%, #141414 45%, #0d0d0d 95%, rgba(229, 9, 20, 0.35) 100%);
+  box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10% 0;
+  z-index: 4;
+}
+
+.cover__spine-band {
+  width: 90%;
+  height: 10px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #111111 50%, #050505 100%);
+  border-top: 1px solid rgba(201, 162, 39, 0.35);
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  border-radius: 1px;
+}
+
+/* Inset Thin Red Frame Line */
+.cover__frame-line {
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  right: 16px;
+  left: 48px;
+  border: 1px solid rgba(229, 9, 20, 0.35);
+  pointer-events: none;
+}
+
+.cover__frame-line::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 0.5px solid rgba(229, 9, 20, 0.15);
+}
+
+/* Brass Corner Plates */
+.brass-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.brass-corner--tl {
+  top: 8px;
+  left: 42px;
+}
+
+.brass-corner--tr {
+  top: 8px;
+  right: 8px;
+}
+
+.brass-corner--bl {
+  bottom: 8px;
+  left: 42px;
+}
+
+.brass-corner--br {
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Cover Content Header */
+.cover__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  z-index: 3;
+}
+
+.cover__codeverse {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--rules-grey);
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.cover__manual {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: var(--rules-brass);
+  margin: 0;
+}
+
+/* Cover Center Emblem */
+.cover__emblem-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.cover__emblem-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Cover Center Title */
+.cover__title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 3;
+  width: 100%;
+}
+
+.cover__accent-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rules-red), transparent);
+}
+
+.cover__title {
+  font-family: 'Black Ops One', 'Cinzel', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: #d1cdc7;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
+}
+
+/* Cover Classified Stamp Box */
+.cover__stamp {
+  border: 1.5px solid rgba(229, 9, 20, 0.85);
+  background: rgba(229, 9, 20, 0.05);
+  padding: 0.3rem 1rem;
+  transform: rotate(-3deg);
+  font-family: 'Black Ops One', 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  color: var(--rules-red);
+  text-shadow: 0 0 4px rgba(229, 9, 20, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+}
+
+/* Red Ribbon Bookmark */
+.cover__ribbon {
+  position: absolute;
+  bottom: -28px;
+  left: 36%;
+  width: 22px;
+  height: 38px;
+  background: linear-gradient(to right, #8c060d 0%, var(--rules-red) 50%, #6e050b 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 8px;
+  z-index: 4;
+}
+
+.cover__ribbon-mark {
+  width: 10px;
+  height: 10px;
+  color: rgba(201, 162, 39, 0.85);
+}
+
+/* Animated Darkening Overlay during rotation */
+.cover__darken-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #000000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.3s cubic-bezier(0.65, 0.02, 0.2, 1) 0.3s;
+  z-index: 6;
+}
+
+[data-state="open"] .cover__darken-overlay {
+  opacity: 0.8;
+}
+
+/* =====================================================================
+   SEQUENTIAL REVEAL ANIMATIONS (Stage 3)
+   ===================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  clip-path: inset(0 0 100% 0);
+  transition: opacity 0.5s ease, transform 0.5s ease, clip-path 0.6s ease;
+  transition-delay: var(--d, 0s);
+}
+
+[data-state="open"] .reveal {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0);
+}
+
+.reveal-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0s);
+}
+
+[data-state="open"] .reveal-line {
+  transform: scaleX(1);
+}
+
+.reveal-stamp {
+  opacity: 0;
+  transform: scale(1.1) rotate(-3deg);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: var(--d, 3.4s);
+}
+
+[data-state="open"] .reveal-stamp {
+  opacity: 1;
+  transform: scale(1) rotate(-3deg);
+}
+
+/* =====================================================================
+   FAQ CONTAINER (Outside & Below Book on both Desktop and Mobile)
+   ===================================================================== */
+.rules__faq-wrap {
+  width: 100%;
+  max-width: 1150px;
+  margin-top: 5rem;
+  z-index: 10;
+  display: block;
+}
+
+.book__tap-hint {
+  display: none;
+}
+
+/* =====================================================================
+   SECTION EXIT (Stage 5)
+   ===================================================================== */
+.rules__exit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.rules__exit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.5), transparent);
+}
+
+/* =====================================================================
+   DESKTOP LAYOUT (>= 1024px)
+   ===================================================================== */
+@media (min-width: 1024px) {
+  .rules__top-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  [data-state="closed"] .rules__intro {
+    max-width: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  [data-state="open"] .rules__intro {
+    max-width: 360px;
+    margin-right: 1rem;
+    opacity: 1;
+  }
+
+  .book-stage {
+    flex: 1;
+    max-width: 880px;
+  }
+}
+
+/* =====================================================================
+   TABLET LAYOUT (768px - 1023px)
+   ===================================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rules__top-row {
+    flex-direction: column;
+  }
+
+  .rules__intro {
+    max-width: 700px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .rules__subtext {
+    max-width: 550px;
+  }
+
+  .book {
+    width: min(90vw, 840px);
+  }
+}
+
+/* =====================================================================
+   MOBILE LAYOUT (< 768px) - 3D HINGED BOOK & OUTSIDE FAQ
+   ===================================================================== */
+@media (max-width: 767px) {
+  .rules {
+    overflow-x: clip; /* Clip left swing without horizontal scrollbar */
+    padding: 4rem 1rem 6rem;
+  }
+
+  .rules__inner {
+    width: 100%;
+  }
+
+  .rules__top-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rules__intro {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .rules__heading {
+    font-size: 2.3rem;
+  }
+
+  .rules__subtext {
+    max-width: 100%;
+  }
+
+  /* Book Stage */
+  .book-stage {
+    width: 100%;
+    padding: 0.5rem 0 1rem;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .book-scene {
+    perspective: 1100px;
+    perspective-origin: 50% 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .book-tilt {
+    --rx: 2deg;
+    --ry: -6deg;
+    --rz: 0deg;
+    transform: rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz)) !important;
+    transition: transform 1.5s cubic-bezier(0.65, 0.02, 0.2, 1);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  [data-state="open"] .book-tilt {
+    --rx: 0deg;
+    --ry: 0deg;
+    --rz: 0deg;
+  }
+
+  /* Book Container: Shared Grid for Cover & Rules Page */
+  .book {
+    width: 86vw;
+    max-width: 420px;
+    margin-inline: auto;
+    aspect-ratio: auto;
+    transform: none !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    transform-style: preserve-3d;
+    position: relative;
+    transition: transform 1.5s cubic-bezier(0.65, 0.02, 0.2, 1);
+  }
+
+  .page-under--left {
+    display: none;
+  }
+
+  .page-under--right {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    border-radius: 6px;
+    background: var(--rules-panel2);
+    box-shadow: 1px 1px 0 #1c1c1c, 2px 2px 0 #0b0b0b, 3px 3px 0 #1c1c1c, 4px 4px 0 #0b0b0b;
+    transform: translateZ(0);
+    z-index: 0;
+  }
+
+  .page--right {
+    display: none; /* Desktop 2nd page hidden on mobile */
+  }
+
+  /* Shared Grid-Area for Rules Page and Hinged Cover */
+  .page--rules,
+  .cover {
+    grid-area: 1 / 1;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-height: max(calc(86vw * 4 / 3), 520px);
+  }
+
+  .page--rules {
+    transform: translateZ(2px);
+    border-radius: 6px;
+    box-shadow: inset 18px 0 25px -6px rgba(0, 0, 0, 0.92), inset 0 0 40px rgba(0, 0, 0, 0.75);
+    padding: 2.2rem 1.4rem;
+    z-index: 1;
+    border: 1px solid var(--rules-border);
+  }
+
+  .cover {
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transform: translateZ(4px) rotateY(0deg);
+    transition: transform 1.4s cubic-bezier(0.65, 0.02, 0.2, 1) 0.3s, opacity 0.35s ease 1.35s;
+    border-radius: 6px;
+    z-index: 2;
+  }
+
+  [data-state="open"] .cover {
+    transform: translateZ(4px) rotateY(-170deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cover__face {
+    border-radius: 6px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .cover__front {
+    padding: 10% 8% 10% 18%;
+  }
+
+  /* Red Tap/Scroll Hint */
+  .book__tap-hint {
+    display: block;
+    margin-top: 1.25rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: rgba(229, 9, 20, 0.85);
+    text-transform: uppercase;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  [data-state="open"] .book__tap-hint {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Typography on mobile (≥ 17px title, ≥ 15px desc/num) */
+  .rule-row {
+    padding: 0.65rem 0 0.75rem;
+  }
+
+  .rule-row__num {
+    font-size: 0.95rem; /* ~15.2px */
+  }
+
+  .rule-row__title {
+    font-size: 1.1rem; /* ~17.6px */
+    line-height: 1.35;
+  }
+
+  .rule-row__desc {
+    font-size: 0.95rem; /* ~15.2px */
+    line-height: 1.5;
+  }
+
+  /* Standalone FAQ Container below the book on mobile */
+  .rules__faq-wrap {
+    width: 100%;
+    margin-top: 3.5rem;
+    display: block;
+    z-index: 10;
+  }
+}
+
+/* =====================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .book-tilt,
+  .book,
+  .cover,
+  .cover__darken-overlay,
+  .rules__intro,
+  .reveal,
+  .reveal-line,
+  .reveal-stamp {
+    transition: opacity 0.3s ease !important;
+    transition-delay: 0s !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  [data-state="open"] .reveal,
+  [data-state="open"] .reveal-line,
+  [data-state="open"] .reveal-stamp {
+    opacity: 1 !important;
+  }
+}
