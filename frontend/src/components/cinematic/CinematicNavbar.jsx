@@ -168,8 +168,8 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
             JOIN THE CREW →
           </button>
 
-          {/* StaggeredMenu Hamburger Trigger & Panel */}
-          <div className="flex items-center">
+          {/* StaggeredMenu Hamburger Trigger & Panel (Mobile & Tablet only) */}
+          <div className="lg:hidden flex items-center">
             <StaggeredMenu
               position="right"
               items={MENU_ITEMS}
