@@ -58,13 +58,16 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Keep navbar visible across the entire website for navigation
-  const isNavbarVisible = true;
+  const isNavbarVisible = isIntroCompleted ? true : visible !== undefined ? visible : progress >= 0.86;
 
   return (
     <nav
       aria-label="Cinematic Navigation"
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/70 border-b border-white/10 transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto"
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/70 border-b border-white/10 transition-all duration-500 ease-out ${
+        isNavbarVisible
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-full pointer-events-none"
+      }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-14 md:h-16 flex items-center justify-between select-none">
         

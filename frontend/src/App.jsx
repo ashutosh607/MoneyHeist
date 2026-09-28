@@ -12,7 +12,7 @@ import GlobalBackgroundAudio from "@/components/cinematic/GlobalBackgroundAudio"
 import heistBg from "@/assets/images/heist_bg.png";
 
 function App() {
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
   return (
     <main className="relative w-full min-h-screen text-[#F5F2ED] selection:bg-[#E50914] selection:text-white">
