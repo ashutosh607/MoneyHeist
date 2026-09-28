@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
+import StaggeredMenu from "@/components/ui/StaggeredMenu";
 
 /**
  * CinematicNavbar
  *
- * Preserves the exact visual design:
- * - Glassmorphic top navigation with backdrop-blur-md bg-black/60 border-b border-white/10
+ * Glassmorphic top navigation with:
  * - Left branding: red pulsing beacon + CODEVERSE 2.0
- * - Navigation links connected to:
- *   - The Briefing (#briefing)
- *   - The Plan (#plan)
- *   - Schedule (#schedule)
- *   - The Loot (#loot)
- *   - Rules (#rules)
- *   - Join the crew (#enter)
+ * - Desktop links: The Plan, Schedule, The Loot, Rules, The Mint
+ * - Right CTA: Join the crew
+ * - Integrated React Bits StaggeredMenu with tactical Money Heist theme & animated hamburger
  */
 export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = false }) {
   const [activeSection, setActiveSection] = useState("hero");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollTo = (id) => {
-    setMobileMenuOpen(false);
     if (id === "top") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -29,6 +23,21 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const MENU_ITEMS = [
+    { label: "The Plan", ariaLabel: "Go to The Plan section", link: "#plan" },
+    { label: "Schedule", ariaLabel: "Go to Schedule section", link: "#schedule" },
+    { label: "The Loot", ariaLabel: "Go to The Loot section", link: "#loot" },
+    { label: "Rules", ariaLabel: "Go to Professor's Rules section", link: "#rules" },
+    { label: "The Mint", ariaLabel: "Go to The Mint section", link: "#mint" },
+    { label: "Join The Crew", ariaLabel: "Join the crew registration", link: "#enter" },
+  ];
+
+  const SOCIAL_ITEMS = [
+    { label: "Discord", link: "https://discord.gg" },
+    { label: "Instagram", link: "https://instagram.com" },
+    { label: "GitHub", link: "https://github.com" },
+  ];
 
   // Track active section via IntersectionObserver
   useEffect(() => {
@@ -49,16 +58,13 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isNavbarVisible = isIntroCompleted ? true : visible !== undefined ? visible : progress >= 0.86;
+  // Keep navbar visible across the entire website for navigation
+  const isNavbarVisible = true;
 
   return (
     <nav
       aria-label="Cinematic Navigation"
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/60 border-b border-white/10 transition-all duration-700 ease-out ${
-        isNavbarVisible
-          ? "opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 -translate-y-full pointer-events-none"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/70 border-b border-white/10 transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto"
     >
       <div className="max-w-6xl mx-auto px-6 h-14 md:h-16 flex items-center justify-between select-none">
         
@@ -152,76 +158,34 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
           </button>
         </div>
 
-        {/* Right CTA Button & Mobile Toggle */}
-        <div className="flex items-center gap-4">
+        {/* Right CTA Button & Animated Staggered Menu Toggle */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             type="button"
             onClick={() => scrollTo("enter")}
-            className="px-4 py-1.5 bg-[#E50914] hover:bg-[#FF1A1A] text-white font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold transition-all shadow-[0_0_15px_rgba(229,9,20,0.3)] cursor-pointer whitespace-nowrap"
+            className="px-3.5 sm:px-4 py-1.5 bg-[#E50914] hover:bg-[#FF1A1A] text-white font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold transition-all shadow-[0_0_15px_rgba(229,9,20,0.3)] cursor-pointer whitespace-nowrap"
           >
             JOIN THE CREW →
           </button>
 
-          {/* Mobile hamburger button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-1.5 text-neutral-400 hover:text-white font-mono text-base"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? "✕" : "☰"}
-          </button>
+          {/* StaggeredMenu Hamburger Trigger & Panel (Mobile & Tablet only) */}
+          <div className="lg:hidden flex items-center">
+            <StaggeredMenu
+              position="right"
+              items={MENU_ITEMS}
+              socialItems={SOCIAL_ITEMS}
+              displaySocials={true}
+              displayItemNumbering={true}
+              colors={["#141414", "#80060d", "#E50914"]}
+              accentColor="#E50914"
+              menuButtonColor="#F5F2ED"
+              openMenuButtonColor="#E50914"
+              changeMenuColorOnOpen={true}
+            />
+          </div>
         </div>
 
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-black/95 border-b border-[#292929] px-6 py-6 font-mono text-xs tracking-widest uppercase space-y-4">
-          <button
-            type="button"
-            onClick={() => scrollTo("plan")}
-            className="block w-full text-left py-2 text-[#A3A3A3] hover:text-white"
-          >
-            THE PLAN
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("schedule")}
-            className="block w-full text-left py-2 text-[#A3A3A3] hover:text-white"
-          >
-            SCHEDULE
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("loot")}
-            className="block w-full text-left py-2 text-[#A3A3A3] hover:text-white"
-          >
-            THE LOOT
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("rules")}
-            className="block w-full text-left py-2 text-[#A3A3A3] hover:text-white"
-          >
-            RULES
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("mint")}
-            className="block w-full text-left py-2 text-[#A3A3A3] hover:text-white"
-          >
-            THE MINT
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("enter")}
-            className="block w-full text-left py-2 text-[#E50914] font-bold"
-          >
-            JOIN THE CREW →
-          </button>
-        </div>
-      )}
     </nav>
   );
 }

@@ -1,37 +1,38 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import maskedHeistImg from "@/assets/images/masked-heist-nobg.png";
 import crewImg from "@/assets/images/crew.png";
+import phase1Blueprint from "@/assets/images/phase1_blueprint.png";
+import phase2Radio from "@/assets/images/phase2_radio.png";
 import VariableProximity from "@/components/ui/VariableProximity";
 import { BlurText } from "@/components/ui/BlurText";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 export function ThePlan() {
   const planHeaderRef = useRef(null);
+  const [activePhase, setActivePhase] = useState(1);
 
-  const OBJECTIVES = [
+  const PHASES = [
     {
-      step: "01",
-      title: "GET IN",
-      action: "Get in through the front doors at 08:00.",
-      detail: "Pass security verification at the registration desk. Hardware deployed, all three crew members accounted for.",
+      id: 1,
+      phaseNum: "01",
+      timing: "PHASE 01 · 10:00 AM – 1:30 PM",
+      title: "INSIDE THE MINT",
+      description:
+        "You've entered the Royal Mint. The Professor briefed you on the tasks. Complete them fast, and complete them right. Only the top 10 crews move on.",
+      classified: "TASK DETAILS ARE CLASSIFIED UNTIL THE BRIEFING.",
+      image: phase1Blueprint,
+      imageAlt: "Royal Mint Security Floor Plan Blueprint",
     },
     {
-      step: "02",
-      title: "TAKE CONTROL",
-      action: "Take control of the mint & solve the challenges.",
-      detail: "Infiltrate Phase 1 inside the mint. Solve rapid development problems, decrypt data streams, and rank in the top 10.",
-    },
-    {
-      step: "03",
-      title: "PRINT THE LOOT",
-      action: "Print what you came for before time expires.",
-      detail: "Execute solutions with precision. Only the top 10 crews move on to Phase 2: The Escape.",
-    },
-    {
-      step: "04",
-      title: "GET OUT",
-      action: "Get out before the walls close in.",
-      detail: "Collect every hint in Phase 2. The first crew to unlock the final escape sequence claims the vault.",
+      id: 2,
+      phaseNum: "02",
+      timing: "PHASE 02 · 2:30 PM – 4:30 PM",
+      title: "THE ESCAPE",
+      description:
+        "You're out of the mint, but not out of trouble. Every decision matters. You either escape, or you get caught. The first crew to collect every hint wins.",
+      classified: "TASK DETAILS ARE CLASSIFIED UNTIL THE BRIEFING.",
+      image: phase2Radio,
+      imageAlt: "Tactical Escape Two-Way Radio Communicator",
     },
   ];
 
@@ -116,7 +117,7 @@ export function ThePlan() {
                 OPERATIONAL BREAKDOWN
               </span>
               <h3 className="font-heist text-2xl sm:text-3xl text-white tracking-wider uppercase">
-                FOUR STEPS. ZERO COMPROMISES.
+                TWO STEPS. ZERO COMPROMISES.
               </h3>
             </div>
             <div className="font-mono text-[11px] text-[#A3A3A3] tracking-widest uppercase px-3.5 py-1.5 bg-[#171717] border border-[#292929] shrink-0 self-start sm:self-auto flex items-center gap-1.5">
@@ -128,42 +129,165 @@ export function ThePlan() {
             </div>
           </div>
 
-          {/* 4 Horizontal Step Columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {OBJECTIVES.map((item, idx) => (
-              <div
-                key={item.step}
-                className="relative p-6 bg-[#0c0c0c] border border-[#292929] hover:border-[#E50914]/60 transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-xs font-bold text-[#E50914] tracking-widest">
-                      <AnimatedCounter from={0} value={parseInt(item.step, 10)} padDigits={2} duration={1.2} />
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#292929] group-hover:bg-[#E50914] transition-colors" />
+          {/* 2 Interactive Accordion Phase Cards */}
+          <div className="flex flex-col md:flex-row gap-5 lg:gap-6 items-stretch min-h-[380px] md:min-h-[430px]">
+            {PHASES.map((phase) => {
+              const isActive = activePhase === phase.id;
+
+              return (
+                <div
+                  key={phase.id}
+                  onMouseEnter={() => setActivePhase(phase.id)}
+                  onClick={() => setActivePhase(phase.id)}
+                  className={`relative rounded-sm overflow-hidden p-6 sm:p-8 flex flex-col justify-between cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] select-none border ${
+                    isActive
+                      ? "md:flex-[2.1] lg:flex-[2.3] bg-[#0c100e]/95 border-[#E50914]/80 shadow-[0_0_35px_rgba(229,9,20,0.16)]"
+                      : "md:flex-[0.9] lg:flex-1 bg-[#090b0a]/90 border-[#222222] hover:border-[#383838]"
+                  }`}
+                >
+                  {/* Subtle Blueprint Grid Background */}
+                  <div
+                    className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)",
+                      backgroundSize: "28px 28px",
+                      opacity: isActive ? 0.08 : 0.03,
+                    }}
+                  />
+
+                  {/* Corner Target Markers (Tactical styling) */}
+                  <div
+                    className={`absolute top-2 left-2 w-2 h-2 border-t border-l transition-colors duration-500 ${
+                      isActive ? "border-[#E50914]" : "border-[#333333]"
+                    }`}
+                  />
+                  <div
+                    className={`absolute top-2 right-2 w-2 h-2 border-t border-r transition-colors duration-500 ${
+                      isActive ? "border-[#E50914]" : "border-[#333333]"
+                    }`}
+                  />
+                  <div
+                    className={`absolute bottom-2 left-2 w-2 h-2 border-b border-l transition-colors duration-500 ${
+                      isActive ? "border-[#E50914]" : "border-[#333333]"
+                    }`}
+                  />
+                  <div
+                    className={`absolute bottom-2 right-2 w-2 h-2 border-b border-r transition-colors duration-500 ${
+                      isActive ? "border-[#E50914]" : "border-[#333333]"
+                    }`}
+                  />
+
+                  {/* Top Content: Large Outlined Phase Number */}
+                  <div className="relative z-20 max-w-full md:max-w-[66%] lg:max-w-[70%]">
+                    <div className="flex items-start justify-between">
+                      <span
+                        className="font-heist text-5xl sm:text-6xl md:text-7xl font-black tracking-tight select-none transition-all duration-700"
+                        style={{
+                          WebkitTextStroke: isActive
+                            ? "1.5px rgba(255, 255, 255, 0.55)"
+                            : "1.5px rgba(255, 255, 255, 0.18)",
+                          color: "transparent",
+                        }}
+                      >
+                        {phase.phaseNum}
+                      </span>
+
+                      {/* Status indicator dot */}
+                      <div className="flex items-center gap-2 pt-2 md:hidden">
+                        <span
+                          className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                            isActive
+                              ? "bg-[#E50914] shadow-[0_0_10px_#E50914]"
+                              : "bg-[#292929]"
+                          }`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Horizontal Divider Line with Phase Timing */}
+                    <div className="relative my-4 flex items-center">
+                      <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-[#292929] via-[#3d3d3d] to-transparent" />
+                      <div className="relative z-10 font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase font-semibold bg-[#0c100e]/85 backdrop-blur-xs pr-3 py-0.5 flex items-center gap-2">
+                        <span
+                          className={`transition-colors duration-500 ${
+                            isActive ? "text-[#E50914]" : "text-[#737373]"
+                          }`}
+                        >
+                          {phase.timing}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Main Title */}
+                    <h4 className="font-heist text-2xl sm:text-3xl lg:text-4xl text-white tracking-wider uppercase mb-3 transition-colors duration-300">
+                      {phase.title}
+                    </h4>
+
+                    {/* Description & Hazard Striped Banner (Expanded smoothly when active) */}
+                    <div
+                      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                        isActive
+                          ? "opacity-100 max-h-56 mt-3"
+                          : "opacity-0 max-h-0 md:opacity-0 md:max-h-0 mt-0 pointer-events-none"
+                      }`}
+                    >
+                      <p className="font-sans text-xs sm:text-sm text-[#A3A3A3] font-light leading-relaxed mb-5 max-w-sm lg:max-w-md">
+                        {phase.description}
+                      </p>
+
+                      {/* Hazard Hatched Stripes Bar */}
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-16 h-3 shrink-0 rounded-[1px] border border-[#333333]"
+                          style={{
+                            backgroundImage:
+                              "repeating-linear-gradient(45deg, #E50914 0, #E50914 4px, #1a1a1a 4px, #1a1a1a 8px)",
+                            opacity: 0.85,
+                          }}
+                        />
+                        <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] text-[#737373] uppercase font-medium">
+                          {phase.classified}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  <h4 className="font-heist text-xl text-white tracking-wider uppercase mb-2 group-hover:text-[#F5F2ED] transition-colors">
-                    {item.title}
-                  </h4>
+                  {/* 3D Prop Render on the Right Side (Smooth zoom & float) */}
+                  <div
+                    className={`absolute z-10 ${
+                      phase.id === 1
+                        ? "right-0 sm:right-2 md:right-4 w-44 sm:w-60 md:w-72 lg:w-80"
+                        : "right-3 sm:right-6 md:right-10 w-28 sm:w-36 md:w-44 lg:w-52"
+                    } top-1/2 -translate-y-1/2 pointer-events-none select-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isActive
+                        ? "scale-100 opacity-60 sm:opacity-100 translate-x-0"
+                        : "scale-85 opacity-25 sm:opacity-40 translate-x-3"
+                    }`}
+                  >
+                    <img
+                      src={phase.image}
+                      alt={phase.imageAlt}
+                      className="w-full h-auto object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]"
+                    />
+                  </div>
 
-                  <p className="font-sans text-sm text-[#F5F2ED] font-medium leading-snug mb-3">
-                    {item.action}
-                  </p>
-
-                  <p className="font-sans text-xs text-[#A3A3A3] font-light leading-relaxed">
-                    {item.detail}
-                  </p>
+                  {/* Bottom Phase Status Bar */}
+                  <div className="relative z-10 mt-6 pt-4 border-t border-[#1e1e1e] flex items-center justify-between font-mono text-[10px] text-[#666666] tracking-widest uppercase">
+                    <span className={isActive ? "text-[#E50914] font-bold" : "text-[#555555]"}>
+                      {isActive ? "STATUS: ACTIVE FOCUS" : "CLICK / HOVER TO EXPAND"}
+                    </span>
+                    <span
+                      className={`text-xs transition-transform duration-500 ${
+                        isActive ? "text-[#E50914] translate-x-1" : "text-[#444444]"
+                      }`}
+                    >
+                      →
+                    </span>
+                  </div>
                 </div>
-
-                <div className="mt-6 pt-4 border-t border-[#1a1a1a] flex items-center justify-between font-mono text-[10px] text-[#666666] tracking-widest uppercase">
-                  <span>
-                    PHASE <AnimatedCounter from={0} value={idx < 3 ? 1 : 2} padDigits={2} duration={0.8} />
-                  </span>
-                  <span className="text-[#E50914]">→</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Bottom Security Directives Banner */}
