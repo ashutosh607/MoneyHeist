@@ -24,7 +24,7 @@ if (typeof window !== "undefined") {
 const DEFAULT_FAQS = [
   {
     q: "How do I register?",
-    a: "Registration runs on Unstop from 29 September to 6 October. Hit Join the crew, form your team of three there and you're in.",
+    a: "Registration runs on Unstop from 29 September to 6 October. Hit Join the crew, form your team of 2-3 members there and you're in.",
   },
   {
     q: "How many crews can enter?",
@@ -32,7 +32,7 @@ const DEFAULT_FAQS = [
   },
   {
     q: "Is there a registration fee?",
-    a: "Yes. The registration fee is ₹99.",
+    a: "Yes. The registration fee is ₹149 per team.",
   },
   {
     q: "Where does the heist happen?",

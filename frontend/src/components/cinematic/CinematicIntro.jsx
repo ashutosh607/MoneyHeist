@@ -6,6 +6,18 @@ import GlitchText from "./GlitchText";
 import { useSharedTypewriterAudio } from "@/hooks/useSharedTypewriterAudio";
 import moneyHeistVideo from "@/assets/videos/moneyheistvd.mp4";
 
+const SCENE_1_LINES = [
+  "It’s been five months since he found you.",
+  "No names. No pasts. Just a knock on the door… and a man who called himself The Professor.",
+];
+
+const SCENE_2_LINES = [
+  "He’d been watching. Waiting. Planning.",
+  "Today, the training ends.",
+];
+
+const SCENE_3_LINES = ["Today… you go in."];
+
 export function CinematicIntro({ onNavbarVisibilityChange }) {
   const initialRatio = useRef(
     typeof window !== "undefined" && window.innerHeight > 0
@@ -116,11 +128,11 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
 
   // Scene timings
   // Scene 1: Professor & Subtitles (Active from start 0.00 to 0.22)
-  const isScene1Active = !isIntroCompleted && smoothProgress < 0.22;
+  const isScene1Active = smoothProgress < 0.22;
   const scene1Opacity = smoothProgress < 0.18 ? 1 : Math.max(0, 1 - (smoothProgress - 0.18) / 0.035);
 
   // Scene 2: Three Crew Members & Subtitles (0.44 to 0.65)
-  const isScene2Active = !isIntroCompleted && smoothProgress >= 0.42 && smoothProgress < 0.65;
+  const isScene2Active = smoothProgress >= 0.42 && smoothProgress < 0.65;
   const scene2Opacity =
     smoothProgress < 0.42
       ? 0
@@ -129,7 +141,7 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
       : Math.max(0, 1 - (smoothProgress - 0.60) / 0.04);
 
   // Scene 3: Pure Black (0.75 to 0.86)
-  const isScene3Active = !isIntroCompleted && smoothProgress >= 0.74 && smoothProgress < 0.86;
+  const isScene3Active = smoothProgress >= 0.74 && smoothProgress < 0.86;
   const scene3Opacity =
     smoothProgress < 0.74
       ? 0
@@ -171,7 +183,7 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
   };
 
   return (
-    <div id="intro-hero" className="relative w-full bg-transparent text-[#f3f4f6]" style={{ height: "550vh" }}>
+    <div id="intro-hero" className="relative w-full bg-black text-[#f3f4f6]" style={{ height: "550vh" }}>
       {/* Top Glassmorphism Navigation */}
       <CinematicNavbar
         progress={isIntroCompleted ? 1 : smoothProgress}
@@ -185,10 +197,10 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
       <div id="narrative-trigger-scene-3" className="absolute top-[380vh] h-[60vh] w-full pointer-events-none" />
 
       {/* Pinned Sticky Cinematic Viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black/85 flex items-center justify-center select-none pt-14 md:pt-16">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black flex items-center justify-center select-none pt-14 md:pt-16">
         
         {/* Layer 1: Pixel Canvas */}
-        {!isIntroCompleted && (
+        {smoothProgress < 0.88 && (
           <PixelCanvas
             progress={smoothProgress}
             reducedMotion={reducedMotion}
@@ -205,7 +217,7 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
         />
 
         {/* Layer 3: Narrative Subtitles (Scenes 1-3) */}
-        {!isIntroCompleted && (
+        {smoothProgress < 0.88 && (
           <>
             {/* SCENE 1 SUBTITLES (The Professor) */}
             <div
@@ -232,13 +244,10 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
               <div className="text-sm sm:text-base md:text-lg text-neutral-300 font-light tracking-wide space-y-3">
                 <ScrollTypewriterBlock
                   triggerId="narrative-trigger-scene-1"
-                  isActive={isScene1Active && smoothProgress > 0.02}
-                  lines={[
-                    "It’s been five months since he found you.",
-                    "No names. No pasts. Just a knock on the door… and a man who called himself The Professor.",
-                  ]}
-                  wordDelay={150}
-                  linePause={500}
+                  isActive={isScene1Active}
+                  lines={SCENE_1_LINES}
+                  wordDelay={140}
+                  linePause={450}
                   className="text-neutral-200"
                   lineClassName="text-neutral-200"
                   cursorClassName="bg-red-600"
@@ -257,12 +266,9 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
                 <ScrollTypewriterBlock
                   triggerId="narrative-trigger-scene-2"
                   isActive={isScene2Active}
-                  lines={[
-                    "He’d been watching. Waiting. Planning.",
-                    "Today, the training ends.",
-                  ]}
-                  wordDelay={150}
-                  linePause={500}
+                  lines={SCENE_2_LINES}
+                  wordDelay={140}
+                  linePause={450}
                   className="text-neutral-200"
                   lineClassName="text-neutral-200"
                   cursorClassName="bg-red-600"
@@ -281,8 +287,8 @@ export function CinematicIntro({ onNavbarVisibilityChange }) {
                 <ScrollTypewriterBlock
                   triggerId="narrative-trigger-scene-3"
                   isActive={isScene3Active}
-                  lines={["Today… you go in."]}
-                  wordDelay={160}
+                  lines={SCENE_3_LINES}
+                  wordDelay={150}
                   className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                   cursorClassName="bg-white"
                 />

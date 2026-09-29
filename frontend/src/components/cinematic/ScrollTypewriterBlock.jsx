@@ -66,7 +66,8 @@ export function ScrollTypewriterBlock({
   return (
     <div
       ref={targetRef}
-      className={`font-['Special_Elite'] tracking-wide select-none ${className}`}
+      className={`tracking-wide select-none ${className}`}
+      style={{ fontFamily: "'Special Elite', monospace, Courier, sans-serif" }}
       aria-label={Array.isArray(lines) ? lines.join(" ") : String(lines)}
     >
       <div className="space-y-3">
@@ -87,7 +88,7 @@ export function ScrollTypewriterBlock({
                     <span
                       className={
                         isRevealed
-                          ? "inline text-inherit"
+                          ? "inline text-neutral-100 font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                           : "invisible select-none pointer-events-none opacity-0"
                       }
                       aria-hidden={!isRevealed}

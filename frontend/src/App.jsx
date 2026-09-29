@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CinematicIntro from "@/components/cinematic/CinematicIntro";
 import ThePlan from "@/components/sections/ThePlan";
 import TheSchedule from "@/components/sections/TheSchedule";
@@ -13,12 +13,33 @@ import heistBg from "@/assets/images/heist_bg.png";
 
 function App() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const [isPastLanding, setIsPastLanding] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const planEl = document.getElementById("plan");
+      if (planEl) {
+        const rect = planEl.getBoundingClientRect();
+        // Background is active everywhere from The Plan down to the bottom of the page
+        setIsPastLanding(rect.top <= window.innerHeight * 1.1);
+      } else {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        setIsPastLanding(scrollY > window.innerHeight * 3.8);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <main className="relative w-full min-h-screen text-[#F5F2ED] selection:bg-[#E50914] selection:text-white">
-      {/* Global Fixed Heist Board Background - Unobstructed scrolling & non-interactive layer */}
+    <main className="relative w-full min-h-screen bg-black text-[#F5F2ED] selection:bg-[#E50914] selection:text-white">
+      {/* Fixed Heist Board Background - Visible everywhere across the site EXCEPT starting and landing page */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden"
+        className={`fixed inset-0 z-0 pointer-events-none select-none overflow-hidden transition-opacity duration-500 ease-out ${
+          isPastLanding ? "opacity-100" : "opacity-0"
+        }`}
         aria-hidden="true"
       >
         <img
@@ -35,12 +56,13 @@ function App() {
         <GlobalBackgroundAudio isVisible={isNavbarVisible} />
       </div>
 
-      {/* Website Sections & Chapters */}
-      <div className="relative z-10 w-full">
-        {/* Existing Landing Page - Preserved */}
+      {/* 1. Landing Page - Completely isolated with pure black background */}
+      <section className="relative z-20 w-full bg-black">
         <CinematicIntro onNavbarVisibilityChange={setIsNavbarVisible} />
+      </section>
 
-        {/* Chapters - The Heist Website */}
+      {/* 2. All Chapters & Pages - Background shows through everywhere */}
+      <div className="relative z-10 w-full">
         <ThePlan />
         <TheSchedule />
         <TheLoot />

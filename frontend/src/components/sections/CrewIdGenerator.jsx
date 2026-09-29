@@ -196,7 +196,7 @@ export function CrewIdGenerator() {
   };
 
   const handleShare = async () => {
-    const shareText = `Agent ${codename}, reporting for duty. Join our crew for CodeVerse 2.0, a Money Heist themed event on 9 October at DJSCE. Teams of 3. ₹99.`;
+    const shareText = `Agent ${codename}, reporting for duty. Join our crew for CodeVerse 2.0, a Money Heist themed event on 9 October at DJSCE. Teams of 2-3 members. ₹149 per team.`;
     const shareUrl = window.location.href;
 
     if (navigator.share) {
@@ -222,7 +222,7 @@ export function CrewIdGenerator() {
   return (
     <section
       id="crew-id"
-      className="relative w-full bg-[#080808]/80 backdrop-blur-[1px] text-[#f3f4f6] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 border-t border-[#1a1a1a]/80 overflow-hidden select-none"
+      className="relative w-full bg-[#080808]/75 backdrop-blur-[1px] text-[#f3f4f6] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 border-t border-[#1a1a1a]/80 overflow-hidden select-none"
     >
       {/* Background Subtle Red Tactical Grid */}
       <div

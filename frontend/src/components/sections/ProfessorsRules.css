@@ -3,7 +3,7 @@
    ===================================================================== */
 
 :root {
-  --rules-bg: #080808;
+  --rules-bg: rgba(8, 8, 8, 0.75);
   --rules-black: #000000;
   --rules-panel: #171717;
   --rules-panel2: #111111;
@@ -22,6 +22,7 @@
   width: 100%;
   min-height: 100vh;
   background-color: var(--rules-bg);
+  backdrop-filter: blur(1px);
   color: var(--rules-white);
   padding: 6rem 1.5rem 8rem;
   display: flex;

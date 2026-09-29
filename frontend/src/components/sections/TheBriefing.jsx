@@ -12,7 +12,7 @@ export function TheBriefing() {
       step: "01",
       title: "GET IN",
       action: "Get in through the front doors at 08:00.",
-      detail: "Pass security verification at the registration desk. Hardware deployed, all three crew members accounted for.",
+      detail: "Pass security verification at the registration desk. Hardware deployed, all crew members (2-3) accounted for.",
     },
     {
       step: "02",

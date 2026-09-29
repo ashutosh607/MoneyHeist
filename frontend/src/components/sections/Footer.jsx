@@ -12,7 +12,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#080808]/85 backdrop-blur-[1px] text-[#A3A3A3] pt-24 pb-16 px-6 lg:px-16 border-t border-[#292929]/80">
+    <footer className="w-full bg-[#080808]/75 backdrop-blur-[1px] text-[#A3A3A3] pt-24 pb-16 px-6 lg:px-16 border-t border-[#292929]/80">
       <div className="max-w-6xl mx-auto space-y-16">
         
         {/* Massive BELLA CIAO declaration */}

@@ -11,7 +11,7 @@ import StaggeredMenu from "@/components/ui/StaggeredMenu";
  * - Integrated React Bits StaggeredMenu with tactical Money Heist theme & animated hamburger
  */
 export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = false }) {
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState(null);
 
   const scrollTo = (id) => {
     if (id === "top") {
@@ -39,22 +39,37 @@ export function CinematicNavbar({ progress = 0, visible, isIntroCompleted = fals
     { label: "GitHub", link: "https://github.com" },
   ];
 
-  // Track active section via IntersectionObserver
+  // Track active section via viewport bounding client rects
   useEffect(() => {
-    const sectionIds = ["plan", "schedule", "loot", "rules", "mint", "enter"];
+    const sectionIds = ["plan", "schedule", "loot", "rules", "mint"];
+
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
+      const planEl = document.getElementById("plan");
+      const threshold = window.innerHeight * 0.4;
+
+      // At start (above The Plan), nothing should be highlighted
+      if (!planEl || planEl.getBoundingClientRect().top > threshold) {
+        setActiveSection(null);
+        return;
+      }
+
+      // When The Plan comes into view, highlight The Plan, then progress down section by section
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sectionIds[i]);
-          return;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) {
+            setActiveSection(sectionIds[i]);
+            return;
+          }
         }
       }
-      setActiveSection("hero");
+
+      setActiveSection(null);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

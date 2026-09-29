@@ -186,8 +186,8 @@ export function FinalCta() {
                   REGISTRATION
                 </span>
                 <span className="text-[#F59E0B] text-xs sm:text-sm font-bold tracking-wider flex items-center gap-1">
-                  <AnimatedCounter value={99} prefix="₹" />
-                  <span>PER CREW</span>
+                  <AnimatedCounter value={149} prefix="₹" />
+                  <span>PER TEAM</span>
                 </span>
               </div>
             </div>
@@ -202,9 +202,7 @@ export function FinalCta() {
                   CREW SIZE
                 </span>
                 <span className="text-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-1">
-                  <span>STRICTLY</span>
-                  <AnimatedCounter value={3} />
-                  <span>MEMBERS</span>
+                  <span>2 - 3 MEMBERS</span>
                 </span>
               </div>
             </div>

@@ -5,8 +5,8 @@ import "./ProfessorsRules.css";
 const RULES_DATA = [
   {
     num: "01",
-    title: "THREE TO A CREW.",
-    desc: "Nobody goes in alone, and nobody brings a fourth.",
+    title: "2 TO 3 TO A CREW.",
+    desc: "Nobody goes in alone (2-3 members), and nobody brings a fourth.",
     numDelay: "1.70s",
     titleDelay: "1.82s",
     descDelay: "1.94s",
@@ -67,7 +67,7 @@ const LORE_RULES_DATA = [
 const FAQS_DATA = [
   {
     q: "How do I register?",
-    a: "Registration runs on Unstop from 29 September to 6 October. Hit Join the crew, form your team of three there and you're in.",
+    a: "Registration runs on Unstop from 29 September to 6 October. Hit Join the crew, form your team of 2-3 members there and you're in.",
   },
   {
     q: "How many crews can enter?",
@@ -75,7 +75,7 @@ const FAQS_DATA = [
   },
   {
     q: "Is there a registration fee?",
-    a: "Yes. The registration fee is ₹99.",
+    a: "Yes. The registration fee is ₹149 per team.",
   },
   {
     q: "Where does the heist happen?",
